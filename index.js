@@ -20,6 +20,8 @@ client.once('ready', () => {
   console.log('Ready!');
 });
 
+client.on('unhandledRejection', error => console.log('Uncaught Promise Rejection', error));
+
 client.on('message', message => {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
 
