@@ -16,10 +16,10 @@ module.exports = {
           return message.reply(`please join a voice channel first!`);
       }
 
-      const volume = parseFloat(args[1]) || 0.5;
+      const volume = parseFloat(args[1]) || 0.1;
 
       if (volume < 0 || volume > 2) {
-        return message.reply(`volume must be between 0 and 2!`);
+        return message.reply(`volume must be between 0 and 2! Default: 0.1`);
       }
 
       const defaultUrl = 'https://www.youtube.com/watch?v=Ll10d1Y9wU4';
@@ -32,7 +32,7 @@ module.exports = {
       voiceChannel.join()
         .then(connection => {
           
-          if (connection.speaking) return message.channel.send('I\'m already playing audio!');
+          if (connection.speaking) return message.channel.send(`I\'m already playing audio!}`);
           
           const stream = ytdl(url, {filter: 'audioonly'});
           const dispatcher = connection.playStream(stream);
