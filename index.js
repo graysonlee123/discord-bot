@@ -1,3 +1,4 @@
+require('dotenv').config();
 const fs = require('fs');
 const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
@@ -29,10 +30,12 @@ client.on('message', message => {
   const command = client.commands.get(commandName)
     || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
+  console.log('command: ', command)
+
   if (!command) return;
 
   if (command.guildOnly && message.channel.type !== 'text') {
-    return message.reply('I can\'t execute that command inside DMs!111!!1!!!11')
+    return message.reply('I\'m a voice channel command, join a voice channel!')
   }
 
   if (command.args && !args.length) {
