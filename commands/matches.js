@@ -67,7 +67,7 @@ module.exports = {
                         break;
                     }
 
-                    const [redTeam, blueTeam] = teams;
+                    const [blueTeam, redTeam] = teams;
 
                     let participant;
                     participantIdentities.forEach(item => {
@@ -90,7 +90,7 @@ module.exports = {
                       .setDescription(
                         `Match from ${moment(gameCreation).format(
                           "MMMM Do, h:mm a"
-                        )}`
+                        )}\nDuration: ${Math.floor(gameDuration / 60)}:${gameDuration % 60}`
                       )
                       .addBlankField()
                       .addField(
@@ -100,7 +100,7 @@ module.exports = {
                           `\nDragons: ${redTeam.dragonKills}` +
                           `\nBarons: ${redTeam.baronKills}` +
                           `\nRift Herald: ${
-                            blueTeam.riftHeraldKills > 0 ? "True" : "False"
+                            blueTeam.firstRiftHerald === false ? "True" : "False"
                           }` +
                           `\nFirst blood: ${
                             blueTeam.firstBlood === false ? "True" : "False"
@@ -117,7 +117,7 @@ module.exports = {
                           `\nDragons: ${blueTeam.dragonKills}` +
                           `\nBarons: ${blueTeam.baronKills}` +
                           `\nRift Herald: ${
-                            redTeam.riftHeraldKills > 0 ? "True" : "False"
+                            redTeam.firstRiftHerald === false ? "True" : "False"
                           }` +
                           `\nFirst blood: ${
                             redTeam.firstBlood === false ? "True" : "False"
@@ -130,7 +130,7 @@ module.exports = {
                       .addBlankField()
                       .addField(
                         "Team",
-                        `${participant.teamId === 100 ? 'Red' : 'Blue'}`,
+                        `${participant.teamId === 100 ? 'Blue' : 'Red'}`,
                         true
                       )
                       .addField(
@@ -147,6 +147,26 @@ module.exports = {
                         "KDA",
                         `${participant.stats.kills}/${participant.stats.deaths}/${participant.stats.assists}` + 
                         `\nKilling sprees: ${participant.stats.killingSprees}`,
+                        true
+                      )
+                      .addField(
+                        "Damage Dealt",
+                        `Total damage: ${participant.stats.totalDamageDealt}` +
+                        `\nTotal damage to Champions: ${participant.stats.totalDamageDealtToChampions}` +
+                        `\nPhysical damage: ${participant.stats.physicalDamageDealt}` +
+                        `\nPhysical damage to Champions: ${participant.stats.physicalDamageDealtToChampions}` +
+                        `\nMagic damage: ${participant.stats.magicDamageDealt}` +
+                        `\nMagic damage to Champions: ${participant.stats.magicDamageDealtToChampions}` +
+                        `\nTrue damage: ${participant.stats.trueDamageDealt}` +
+                        `\nTrue damage to Champions: ${participant.stats.trueDamageDealtToChampions}`,
+                        true
+                      )
+                      .addField(
+                        "Damage Taken",
+                        `Total damage: ${participant.stats.totalDamageTaken}` +
+                        `\nPhysical damage: ${participant.stats.physicalDamageTaken}` + 
+                        `\nMagic damage: ${participant.stats.magicalDamageTaken}` +
+                        `\nTrue damage: ${participant.stats.trueDamageTaken}`,
                         true
                       )
                       .addField(
